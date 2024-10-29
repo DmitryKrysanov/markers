@@ -1,0 +1,60 @@
+<mat-card class="filter">
+  <mat-card-header class="filter__header header">
+    <mat-card-title>Фільтр</mat-card-title>
+
+    <button mat-icon-button aria-label="Закрити фільтр" (click)="onClose()">
+      <span class="material-symbols-outlined"> close </span>
+    </button>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form class="filter__form form" [formGroup]="form">
+      <div class="form__row">
+        <mat-form-field appearance="outline" class="form__input">
+          <mat-label>Відрізок часу</mat-label>
+
+          <mat-date-range-input formGroupName="range" [rangePicker]="picker">
+            <input matStartDate formControlName="start" placeholder="Початок" />
+
+            <input matEndDate formControlName="end" placeholder="Кінець" />
+          </mat-date-range-input>
+
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+
+          <mat-date-range-picker #picker></mat-date-range-picker>
+
+          @if (form.get('range.start')?.hasError('matStartDateInvalid')) {
+          <mat-error>Помилкова початкова дата</mat-error>
+          } @if (form.get('range.end')?.hasError('matEndDateInvalid')) {
+          <mat-error>Помилкова кінцева дата</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <div class="form__row">
+        <mat-form-field appearance="outline" class="form__input">
+          <mat-label>Кількість людей в групі</mat-label>
+
+          <mat-select>
+            <mat-option value="one">Будь-яка</mat-option>
+
+            @for(count of [1, 2, 3]; track count) {
+            <mat-option [value]="count">{{ count }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="form__row">
+        <mat-checkbox formControlName="isActive"
+          >Показувати активні группи</mat-checkbox
+        >
+      </div>
+    </form>
+
+    <button mat-button (click)="onResetFilter()">Скинути фільтр</button>
+  </mat-card-content>
+</mat-card>

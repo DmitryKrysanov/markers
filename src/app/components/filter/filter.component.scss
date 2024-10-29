@@ -1,0 +1,27 @@
+.filter {
+  max-width: 300px;
+
+  @media screen and (max-width: 414px) {
+    max-width: 100%;
+  }
+
+  &__header {
+    margin-bottom: 1rem;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form {
+  &__row {
+    margin-bottom: 0.5rem;
+  }
+
+  &__input {
+    width: 100%;
+  }
+}
