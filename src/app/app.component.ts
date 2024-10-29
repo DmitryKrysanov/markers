@@ -7,8 +7,8 @@ import {
   signal,
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { FilterComponent } from './components';
-import { Filter } from './types';
+import { FilterComponent, MapComponent } from './components';
+import { Filter, Group } from './types';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { isEqual } from 'lodash';
@@ -22,6 +22,7 @@ import { isEqual } from 'lodash';
     MatButtonModule,
     MatIconModule,
     MatToolbarModule,
+    MapComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -35,9 +36,11 @@ export class AppComponent {
   filter = signal<Filter>(this.initialFilter);
   isShowFilter = signal(false);
   isFilterExists = computed(() => isEqual(this.filter(), this.initialFilter));
+  selectedGroup = signal<Group>(null);
 
   constructor() {
     effect(() => console.log(this.filter()));
+    effect(() => console.log(this.selectedGroup()));
   }
 
   onFilterToggle(): void {

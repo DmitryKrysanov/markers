@@ -1,11 +1,28 @@
-.content {
-  position: relative;
+.main {
+  height: 100%;
+  width: 100%;
+}
 
-  padding: 1rem;
+.content {
+  height: 100%;
+
+  position: relative;
 }
 
 .filter {
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 1000;
+}
+
+.filter-btn {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 10;
+}
+
+.map {
+  height: 100%;
 }

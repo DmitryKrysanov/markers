@@ -1,8 +1,9 @@
-<main>
-  <mat-toolbar> </mat-toolbar>
+<main class="main">
+  <!-- <mat-toolbar> </mat-toolbar> -->
 
   <section class="content">
     <button
+      class="filter-btn"
       mat-icon-button
       aria-label="Відкрити фільтр"
       (click)="onFilterToggle()"
@@ -17,7 +18,11 @@
       class="filter"
       [(filter)]="filter"
       (closeChanges)="onFilterToggle()"
-    ></app-filter>
+    />
     }
+
+    <div class="map">
+      <app-map [(selectedGroup)]="selectedGroup" />
+    </div>
   </section>
 </main>
