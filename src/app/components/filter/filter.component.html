@@ -13,7 +13,11 @@
         <mat-form-field appearance="outline" class="form__input">
           <mat-label>Відрізок часу</mat-label>
 
-          <mat-date-range-input formGroupName="range" [rangePicker]="picker">
+          <mat-date-range-input
+            formGroupName="range"
+            [rangePicker]="picker"
+            [max]="maxDate"
+          >
             <input matStartDate formControlName="start" placeholder="Початок" />
 
             <input matEndDate formControlName="end" placeholder="Кінець" />
@@ -49,8 +53,8 @@
       </div>
 
       <div class="form__row">
-        <mat-checkbox formControlName="isActive"
-          >Показувати активні группи</mat-checkbox
+        <mat-checkbox formControlName="showOnlyActive"
+          >Показувати тільки активні группи</mat-checkbox
         >
       </div>
     </form>

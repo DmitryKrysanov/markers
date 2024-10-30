@@ -1,29 +1,36 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   inject,
+  input,
   model,
   ViewChild,
 } from '@angular/core';
 import { GoogleMap, GoogleMapsModule } from '@angular/google-maps';
 import { filter, Observable } from 'rxjs';
-import { DataService, GoogleApiService } from '../../services';
-import { AsyncPipe } from '@angular/common';
-import { Group } from '../../types';
+import { GroupsService, GoogleApiService } from '../../services';
+import { AsyncPipe, NgClass } from '@angular/common';
+import { Filter, Group, Marker } from '../../types';
+import { MapService } from './services/map.service';
 
 @Component({
   selector: 'app-map',
   standalone: true,
-  imports: [GoogleMapsModule, AsyncPipe],
+  imports: [GoogleMapsModule, AsyncPipe, NgClass],
+  providers: [MapService],
   templateUrl: './map.component.html',
   styleUrl: './map.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MapComponent {
   selectedGroup = model<Group>();
+  filter = input<Filter>();
 
   private googleApiService = inject(GoogleApiService);
-  private dataService = inject(DataService);
+  private groupsService = inject(GroupsService);
+  private mapService = inject(MapService);
+  parser = new DOMParser();
 
   @ViewChild(GoogleMap) mapRenderer: GoogleMap;
 
@@ -37,31 +44,38 @@ export class MapComponent {
     styles: [],
     streetViewControl: false,
     fullscreenControl: false,
-    center: { lat: 50.100246, lng: 38.613887 },
+    center: { lat: 49.939182, lng: 39.016807 },
     zoom: 12,
   };
 
-  readonly data = this.dataService.data;
+  readonly groups = this.groupsService.groups;
+  data = computed(() =>
+    this.mapService.getMapData(
+      this.groups(),
+      this.filter(),
+      this.selectedGroup()
+    )
+  );
 
-  readonly isApiLoaded$: Observable<any> =
+  readonly isApiLoaded$: Observable<boolean> =
     this.googleApiService.isApiLoaded$.pipe(filter(Boolean));
 
-  zoomChanged(): void {}
+  selectedChanges(selectedMarker: Marker): void {
+    const selectedGroup = this.groups().find(
+      (group: Group) => group.id === selectedMarker.id
+    );
 
-  selectedChanges(selectedGroup: any): void {
     this.selectedGroup.set(selectedGroup);
-
-    this.setOptions({
-      center: new google.maps.LatLng(
-        selectedGroup.coords.lat,
-        selectedGroup.coords.lng
-      ),
-    });
   }
 
-  private setOptions(options: google.maps.MapOptions): void {
-    if (!this.mapRenderer?.googleMap) return;
+  getMarkerOptions(
+    date: Date,
+    marker: Marker
+  ): google.maps.marker.AdvancedMarkerElementOptions {
+    const svgElement = this.mapService.createSvgElement(date, marker);
 
-    this.mapRenderer.googleMap.setOptions(options);
+    return {
+      content: svgElement,
+    };
   }
 }

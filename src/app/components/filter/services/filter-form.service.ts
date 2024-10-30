@@ -11,7 +11,7 @@ export class FilterFormService {
         start: new FormControl<Date>(filter?.range.start ?? null),
         end: new FormControl<Date>(filter?.range.end ?? null),
       }),
-      isActive: new FormControl<boolean>(filter?.isActive ?? false),
+      showOnlyActive: new FormControl<boolean>(filter?.showOnlyActive ?? false),
     });
   }
 

@@ -1,13 +1,16 @@
 <div class="map-view__map map">
   @if (isApiLoaded$ | async) {
-  <google-map #mapRenderer [options]="mapOptions" (zoomChanged)="zoomChanged()">
-    @for(day of data(); track day.date) { @for(group of day.groups; track
+  <google-map #mapRenderer [options]="mapOptions">
+    @for(date of data(); track date.date) { @for(group of date.groups; track
     group.name) {
-    <map-advanced-marker
-      #markerElem="mapAdvancedMarker"
-      [position]="{ lat: group.coords.lat, lng: group.coords.lng }"
-      (mapClick)="selectedChanges(group)"
-    />
+    <div>
+      <map-advanced-marker
+        #markerElem="mapAdvancedMarker"
+        [position]="{ lat: group.coords.lat, lng: group.coords.lng }"
+        (mapClick)="selectedChanges(group)"
+        [options]="getMarkerOptions(date.date, group)"
+      />
+    </div>
     } }
   </google-map>
 

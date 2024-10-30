@@ -5,5 +5,5 @@ export type FilterForm = FromGroup<{
     start: FormControl<Date>;
     end: FormControl<Date>;
   }>;
-  isActive: FormControl<boolean>;
+  showOnlyActive: FormControl<boolean>;
 }>;

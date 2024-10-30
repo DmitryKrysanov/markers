@@ -4,6 +4,7 @@ import {
   Component,
   computed,
   effect,
+  inject,
   signal,
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
@@ -13,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { isEqual } from 'lodash';
 import { GroupDetailsComponent } from './components/group-details/group-details.component';
+import { GroupsService } from './services';
 
 @Component({
   selector: 'app-root',
@@ -31,9 +33,11 @@ import { GroupDetailsComponent } from './components/group-details/group-details.
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
+  private groupsService = inject(GroupsService);
+
   private readonly initialFilter: Filter = {
-    range: { start: null, end: null },
-    isActive: true,
+    range: { start: new Date(), end: new Date() },
+    showOnlyActive: false,
   };
   filter = signal<Filter>(this.initialFilter);
   isShowFilter = signal(false);
@@ -41,7 +45,9 @@ export class AppComponent {
   selectedGroup = signal<Group>(null);
 
   constructor() {
-    effect(() => console.log(this.selectedGroup()));
+    effect(() => this.groupsService.getGroupsByFilter(this.filter()), {
+      allowSignalWrites: true,
+    });
   }
 
   onFilterToggle(): void {

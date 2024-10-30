@@ -48,6 +48,7 @@ export class FilterComponent implements OnInit {
   filter = model<Filter>();
 
   form: FilterForm;
+  maxDate = new Date();
 
   ngOnInit(): void {
     this.form = this.filterFormService.initForm(this.filter());

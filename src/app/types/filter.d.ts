@@ -3,5 +3,5 @@ export type Filter = {
     start: Date;
     end: Date;
   };
-  isActive: boolean;
+  showOnlyActive: boolean;
 };
