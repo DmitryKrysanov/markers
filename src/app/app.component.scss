@@ -16,6 +16,21 @@
   z-index: 1000;
 }
 
+.group-details {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+
+  height: 100%;
+  width: 720px;
+  max-width: 50%;
+
+  @media screen and (max-width: 414px) {
+    max-width: 100%;
+  }
+}
+
 .filter-btn {
   position: absolute;
   top: 1rem;

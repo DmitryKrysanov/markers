@@ -12,6 +12,7 @@ import { Filter, Group } from './types';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { isEqual } from 'lodash';
+import { GroupDetailsComponent } from './components/group-details/group-details.component';
 
 @Component({
   selector: 'app-root',
@@ -23,6 +24,7 @@ import { isEqual } from 'lodash';
     MatIconModule,
     MatToolbarModule,
     MapComponent,
+    GroupDetailsComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -39,11 +41,14 @@ export class AppComponent {
   selectedGroup = signal<Group>(null);
 
   constructor() {
-    effect(() => console.log(this.filter()));
     effect(() => console.log(this.selectedGroup()));
   }
 
   onFilterToggle(): void {
     this.isShowFilter.set(!this.isShowFilter());
+  }
+
+  onCloseGroupDetails(): void {
+    this.selectedGroup.set(null);
   }
 }

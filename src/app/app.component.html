@@ -19,6 +19,12 @@
       [(filter)]="filter"
       (closeChanges)="onFilterToggle()"
     />
+    } @if(selectedGroup()) {
+    <app-group-details
+      class="group-details"
+      [(group)]="selectedGroup"
+      (closeChanges)="onCloseGroupDetails()"
+    />
     }
 
     <div class="map">

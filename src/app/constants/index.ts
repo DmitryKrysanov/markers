@@ -1,2 +1,3 @@
 export { googleApiKey } from './api-key';
-export { dataMock } from './data-mock';
+export { dataMock, membersMock } from './data-mock';
+export { pageSizes } from './page-sizes';
