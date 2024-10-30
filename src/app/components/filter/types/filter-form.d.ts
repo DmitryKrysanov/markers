@@ -1,4 +1,4 @@
-import { FormControl } from '@angular/forms';
+import { FromGroup, FormControl } from '@angular/forms';
 
 export type FilterForm = FromGroup<{
   range: FormGroup<{

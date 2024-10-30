@@ -41,7 +41,7 @@ export const groupsMock: Group[] = [
     id: 1,
   },
   {
-    name: 'Group 2',
+    name: 'Beta',
     location: [
       {
         date: new Date(),
@@ -60,7 +60,7 @@ export const groupsMock: Group[] = [
     id: 2,
   },
   {
-    name: 'Group 3',
+    name: 'Alpha',
     location: [
       {
         date: new Date(),

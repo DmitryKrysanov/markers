@@ -66,6 +66,10 @@ export class FilterComponent implements OnInit {
   private listenFrom(): void {
     this.form.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((value: Filter) => this.filter.set(value));
+      .subscribe((value: Filter) => {
+        if (value.range.start && value.range.end) {
+          this.filter.set(value);
+        }
+      });
   }
 }

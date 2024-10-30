@@ -133,7 +133,7 @@ export class MapService {
     circle.setAttribute('cx', '40');
     circle.setAttribute('cy', '40');
     circle.setAttribute('r', '10');
-    circle.setAttribute('stroke', 'black');
+    circle.setAttribute('stroke', '#434840');
     circle.setAttribute('stroke-width', '4');
     circle.setAttribute('fill', isSelected ? '#416835' : 'white');
 
@@ -149,7 +149,7 @@ export class MapService {
     const label = document.createElementNS(svgNamespace, 'text');
     label.setAttribute('x', '40');
     label.setAttribute('y', '70');
-    label.setAttribute('fill', 'black');
+    label.setAttribute('fill', '#434840');
     label.setAttribute('font-size', '14');
     label.setAttribute('font-weight', 'bold');
     label.setAttribute('text-anchor', 'middle');

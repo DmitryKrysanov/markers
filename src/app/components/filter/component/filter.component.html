@@ -30,9 +30,11 @@
 
           <mat-date-range-picker #picker></mat-date-range-picker>
 
-          @if (form.get('range.start')?.hasError('matStartDateInvalid')) {
+          @if (form.get('range.start')?.hasError('matStartDateInvalid') ||
+          form.get('range.start')?.hasError('matDatepickerParse')) {
           <mat-error>Помилкова початкова дата</mat-error>
-          } @if (form.get('range.end')?.hasError('matEndDateInvalid')) {
+          } @if (form.get('range.end')?.hasError('matEndDateInvalid') ||
+          form.get('range.end')?.hasError('matDatepickerParse')) {
           <mat-error>Помилкова кінцева дата</mat-error>
           }
         </mat-form-field>

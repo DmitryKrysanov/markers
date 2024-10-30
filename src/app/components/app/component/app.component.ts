@@ -16,6 +16,7 @@ import { Filter, Group } from '../../../types';
 import { FilterComponent } from '../../filter';
 import { GroupDetailsComponent } from '../../group-details/group-details.component';
 import { MapComponent } from '../../map';
+import { initialFilter } from '../../../constants';
 
 @Component({
   selector: 'app-root',
@@ -36,13 +37,9 @@ import { MapComponent } from '../../map';
 export class AppComponent {
   private groupsService = inject(GroupsService);
 
-  private readonly initialFilter: Filter = {
-    range: { start: new Date(), end: new Date() },
-    showOnlyActive: false,
-  };
-  filter = signal<Filter>(this.initialFilter);
+  filter = signal<Filter>(initialFilter);
   isShowFilter = signal(false);
-  isFilterExists = computed(() => isEqual(this.filter(), this.initialFilter));
+  isFilterExists = computed(() => isEqual(this.filter(), initialFilter));
   selectedGroup = signal<Group>(null);
 
   constructor() {
