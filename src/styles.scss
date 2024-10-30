@@ -1,19 +1,157 @@
+@use "sass:map";
 @use "@angular/material" as mat;
 
+$_palettes: (
+  primary: (
+    0: #000000,
+    10: #011500,
+    20: #022100,
+    25: #032d00,
+    30: #083902,
+    35: #16450c,
+    40: #225117,
+    50: #2e5d22,
+    60: #3a692d,
+    70: #528343,
+    80: #6b9d5a,
+    90: #84b972,
+    95: #9fd58b,
+    98: #bdf1a8,
+    99: #edffe1,
+    100: #ffffff,
+  ),
+  secondary: (
+    0: #000000,
+    10: #001b3f,
+    20: #12305b,
+    25: #203b67,
+    30: #2c4773,
+    35: #385280,
+    40: #455e8d,
+    50: #5e77a7,
+    60: #7791c2,
+    70: #92acdf,
+    80: #adc7fb,
+    90: #d7e2ff,
+    95: #ecf0ff,
+    98: #f9f9ff,
+    99: #fdfbff,
+    100: #ffffff,
+  ),
+  tertiary: (
+    0: #000000,
+    10: #330045,
+    20: #53006f,
+    25: #640085,
+    30: #721792,
+    35: #7f289f,
+    40: #8d36ac,
+    50: #a851c7,
+    60: #c56ce4,
+    70: #e188ff,
+    80: #eeb1ff,
+    90: #fad7ff,
+    95: #ffebff,
+    98: #fff7fb,
+    99: #fffbff,
+    100: #ffffff,
+  ),
+  neutral: (
+    0: #000000,
+    10: #10110e,
+    20: #2f312d,
+    25: #3a3c38,
+    30: #464743,
+    35: #52534f,
+    40: #5e5f5a,
+    50: #767773,
+    60: #90918c,
+    70: #abaca6,
+    80: #c7c7c1,
+    90: #e3e3dd,
+    95: #f1f1eb,
+    98: #fafaf4,
+    99: #fdfcf6,
+    100: #ffffff,
+    4: #0b0e15,
+    6: #10131a,
+    12: #1c2027,
+    17: #272a31,
+    22: #32353c,
+    24: #363941,
+    87: #d8d9e4,
+    92: #e6e8f2,
+    94: #ecedf8,
+    96: #f1f3fd,
+  ),
+  neutral-variant: (
+    0: #000000,
+    10: #181d16,
+    20: #2d322a,
+    25: #383d35,
+    30: #434840,
+    35: #4f544b,
+    40: #5b6057,
+    50: #74796f,
+    60: #8e9288,
+    70: #a8ada2,
+    80: #c4c8bd,
+    90: #e0e4d8,
+    95: #eef2e7,
+    98: #f7fbef,
+    99: #fafef2,
+    100: #ffffff,
+  ),
+  error: (
+    0: #000000,
+    10: #410002,
+    20: #690005,
+    25: #7e0007,
+    30: #93000a,
+    35: #a80710,
+    40: #ba1a1a,
+    50: #de3730,
+    60: #ff5449,
+    70: #ff897d,
+    80: #ffb4ab,
+    90: #ffdad6,
+    95: #ffedea,
+    98: #fff8f7,
+    99: #fffbff,
+    100: #ffffff,
+  ),
+);
+
 @include mat.core();
+
+$_rest: (
+  secondary: map.get($_palettes, secondary),
+  neutral: map.get($_palettes, neutral),
+  neutral-variant: map.get($_palettes, neutral-variant),
+  error: map.get($_palettes, error),
+);
+
+$_primary: map.merge(map.get($_palettes, primary), $_rest);
+$_tertiary: map.merge(map.get($_palettes, tertiary), $_rest);
 
 $markers-theme: mat.define-theme(
   (
     color: (
       theme-type: light,
-      primary: mat.$azure-palette,
-      tertiary: mat.$blue-palette,
+      primary: $_primary,
+      tertiary: $_tertiary,
     ),
     density: (
       scale: 0,
     ),
   )
 );
+
+@mixin app-theme($palette) {
+  .mat-mdc-fab {
+    background: mat.get-theme-color($palette, surface);
+  }
+}
 
 @mixin group-details-theme($palette) {
   .mat-mdc-card,
@@ -22,13 +160,18 @@ $markers-theme: mat.define-theme(
   }
 }
 
-@mixin custom-components-theme($theme) {
-  @include group-details-theme($theme);
+@mixin filter-theme($palette) {
+  .mat-mdc-card {
+    background: mat.get-theme-color($palette, surface);
+  }
 }
 
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
+@mixin custom-components-theme($theme) {
+  @include app-theme($theme);
+  @include group-details-theme($theme);
+  @include filter-theme($theme);
+}
+
 :root {
   @include mat.all-component-themes($markers-theme);
   @include custom-components-theme($markers-theme);

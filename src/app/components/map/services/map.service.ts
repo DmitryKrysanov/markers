@@ -10,21 +10,32 @@ type MapData = {
 
 @Injectable()
 export class MapService {
-  getMapData(groups: Group[], filter: Filter, selectedGroup: Group): MapData[] {
+  getMapData(
+    groups: Group[],
+    filter: Filter,
+    selectedGroup: Group,
+    isShowLabel: boolean
+  ): MapData[] {
     if (!groups) return null;
 
     const flattened = this.flattenGroups(groups);
-    const groupedByDate = this.groupByDate(flattened, selectedGroup);
+    const groupedByDate = this.groupByDate(
+      flattened,
+      selectedGroup,
+      isShowLabel
+    );
     const filteredByDate = this.filterByDate(groupedByDate, filter.range);
 
     return cloneDeep(filteredByDate);
   }
 
-  createSvgElement(date: Date, marker: Marker) {
+  createSvgElement(date: Date, marker: Marker): SVGSVGElement {
     const svgElement = this.createSvgContainer();
 
     const circle = this.createCircle(marker.isSelected, this.isPastDate(date));
     svgElement.appendChild(circle);
+
+    if (!marker.isShowLabel) return svgElement;
 
     const label = this.createLabel(marker.name, this.isPastDate(date));
     svgElement.appendChild(label);
@@ -63,7 +74,8 @@ export class MapService {
       coords: google.maps.LatLngLiteral;
       id: number;
     }[],
-    selectedGroup: Group
+    selectedGroup: Group,
+    isShowLabel: boolean
   ): {
     date: Date;
     groups: {
@@ -71,6 +83,7 @@ export class MapService {
       name: string;
       coords: google.maps.LatLngLiteral;
       isSelected: boolean;
+      isShowLabel: boolean;
     }[];
   }[] {
     return chain(flattened)
@@ -82,6 +95,7 @@ export class MapService {
           name: item.name,
           coords: item.coords,
           isSelected: item.id === selectedGroup?.id,
+          isShowLabel,
         })),
       }))
       .value();
@@ -120,9 +134,9 @@ export class MapService {
     circle.setAttribute('cy', '40');
     circle.setAttribute('r', '10');
     circle.setAttribute('stroke', 'black');
-
+    circle.setAttribute('stroke-width', '4');
     circle.setAttribute('fill', isSelected ? '#416835' : 'white');
-    circle.setAttribute('stroke-width', isSelected ? '8' : '4');
+
     if (isPastDate) {
       circle.setAttribute('opacity', '0.2');
     }

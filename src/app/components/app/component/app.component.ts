@@ -8,13 +8,14 @@ import {
   signal,
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { FilterComponent, MapComponent } from './components';
-import { Filter, Group } from './types';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { isEqual } from 'lodash';
-import { GroupDetailsComponent } from './components/group-details/group-details.component';
-import { GroupsService } from './services';
+import { GroupsService } from '../../../services';
+import { Filter, Group } from '../../../types';
+import { FilterComponent } from '../../filter';
+import { GroupDetailsComponent } from '../../group-details/group-details.component';
+import { MapComponent } from '../../map';
 
 @Component({
   selector: 'app-root',

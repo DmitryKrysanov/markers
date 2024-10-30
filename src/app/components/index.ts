@@ -1,2 +1,2 @@
-export { FilterComponent } from './filter/filter.component';
-export { MapComponent } from './map/map.component';
+export { FilterComponent } from './filter';
+export { MapComponent } from './map';

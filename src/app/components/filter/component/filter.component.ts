@@ -17,9 +17,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
-import { Filter } from '../../types';
-import { FilterForm } from './types/filter-form';
-import { FilterFormService } from './services';
+import { Filter } from '../../../types';
+import { FilterFormService } from '../services';
+import { FilterForm } from '../types';
 
 @Component({
   selector: 'app-filter',

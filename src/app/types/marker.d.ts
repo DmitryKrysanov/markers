@@ -3,4 +3,5 @@ export type Marker = {
   coords: google.maps.LatLngLiteral;
   id: number;
   isSelected: boolean;
+  isShowLabel: boolean;
 };
